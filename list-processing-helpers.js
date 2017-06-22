@@ -22,8 +22,14 @@ const append = curry((xs, x) =>
     xs.concat([x])
 )
 
+// prepend :: [a] -> a -> [a]
+const prepend = curry((xs, x) =>
+    [x].concat(xs)
+)
+
 
 module.exports.head = head
 module.exports.tail = tail
 module.exports.append = append
+module.exports.prepend = prepend
 module.exports.curry = curry
