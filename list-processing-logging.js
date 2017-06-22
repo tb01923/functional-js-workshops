@@ -7,9 +7,11 @@ const {head, tail, append, curry} = require('./list-processing-helpers')
 // reduce :: ((a, b) -> a) -> a -> [b] -> a
 const reduce = curry((f, agg, xs) => {
     console.log('reduce', agg, xs)
-    return (xs.length) ?
+    const r = (xs.length) ?
         reduce(f, f(agg, head(xs)), tail(xs)) :
         agg
+
+    return r
 })
 
 // appendingCombiner :: (a -> b) -> ([b], a) -> [b]
