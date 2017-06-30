@@ -13,7 +13,7 @@ const reduce = curry((f, agg, xs) => {
 
     return r
 })
-
+d
 // appendingCombiner :: (a -> b) -> ([b], a) -> [b]
 const appendingCombiner = f =>
     (agg, x) =>

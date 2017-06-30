@@ -10,7 +10,11 @@
   "dependencies": {
     "assert": "^1.4.1",
     "fantasy-check": "^0.3.2",
-    "fantasy-land": "^3.2.0"
+    "fantasy-land": "^3.2.0",
+    "fluture": "^6.2.7",
+    "fluture-sanctuary-types": "^1.2.0",
+    "sanctuary": "^0.13.2",
+    "sanctuary-def": "^0.12.1"
   },
   "devDependencies": {},
   "description": ""

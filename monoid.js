@@ -14,7 +14,6 @@ const monoidTypeConstructor = curry(function(_concat, _emptyValue, _equals){
             self :
             Object.create(constructor.prototype)
 
-
     function Monoid(value){
 
         const self = getInstance(this, Monoid)
