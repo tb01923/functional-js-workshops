@@ -7,12 +7,10 @@ const {env: flutureEnv} = require('fluture-sanctuary-types');
 // Sanctuary
 //////////////////////////////////////////////////////////////
 const $ = require('sanctuary-def')
+const Z = require('sanctuary-type-classes')
 const type = require('sanctuary-type-identifiers')
 const {create, env} = require('sanctuary');
-const _S = create({
-    checkTypes: true,
-    env: env.concat(flutureEnv)
-});
+
 //////////////////////////////////////////////////////////////
 // Fantasy Land
 //////////////////////////////////////////////////////////////
@@ -39,16 +37,17 @@ function EitherFuture(_value){
         _value
 
     self[map] = f => EitherFuture(
-        _S.map(_S.map(f), self.getValue())
+        S.map(S.map(f), self.getValue())
     )
 
     self[chain] = f => {
-        const handleE = e => {
-            return _S.chain(f, e)
+        const chainEither = either => {
+            const result = S.chain(f, either)
+            return result
         }
 
-        return _S.chain(
-            handleE, self.getValue()
+        return S.chain(
+            chainEither, self.getValue()
         )
     }
 
@@ -57,27 +56,28 @@ function EitherFuture(_value){
     };
 
     self['fork'] = (e, s) => self.getValue().fork(
-        _S.either(e, e),
-        _S.either(e, s)
+        S.either(e, e),
+        S.either(e, s)
     )
 
-    self['extract']  = self.getValue()
+    self['extract']  = [self.getValue()]
 
     return Object.freeze(self)
 }
 
 EitherFuture[of] = x => EitherFuture(x)
 EitherFuture['@@type'] = $$type
-EitherFuture['isFuture'] = x => x instanceof EitherFuture || type(x) === $$type;
+EitherFuture['isFutureEither'] = x => x instanceof EitherFuture || type(x) === $$type;
 EitherFuture['extract'] = x => x['extract']
 
 //////////////////////////////////////////////////////////////
 // EitherFuture transformers
 //////////////////////////////////////////////////////////////
+const eitherToFuture = either => Future[of](either)
 // :: Either a b -> Future (Either a b)
-const eitherToEitherFuture = either => EitherFuture(Future[of](either))
+const eitherToEitherFuture = either => EitherFuture(eitherToFuture(either))
 // :: Future a b -> Future (Either _ b)
-const futureToEitherFuture = future => EitherFuture(future[map](_S.Right))
+const futureToEitherFuture = future => EitherFuture(future[map](S.Right))
 
 //////////////////////////////////////////////////////////////
 // EitherFutureType
@@ -85,9 +85,16 @@ const futureToEitherFuture = future => EitherFuture(future[map](_S.Right))
 const EitherFutureType = $.UnaryType(
     type.parse(EitherFuture['@@type']).name,
     'https://localhost/nothing-to-see',
-    EitherFuture.isFuture,
+    EitherFuture.isFutureEither,
     EitherFuture.extract
 );
+
+// I need to be able to add this EitherFutureType to the sanctuary environment...
+//      Odd I need to do this here, but there looks to be only one env per project???
+const S = create({
+    checkTypes: true,
+    env: env.concat(flutureEnv).concat([EitherFutureType($.Unknown) ])
+});
 
 module.exports = {
     EitherFuture: EitherFuture,

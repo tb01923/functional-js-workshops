@@ -9,7 +9,9 @@
   "license": "ISC",
   "dependencies": {
     "assert": "^1.4.1",
+    "daggy": "^1.1.0",
     "fantasy-check": "^0.3.2",
+    "fantasy-eithers": "0.0.2",
     "fantasy-land": "^3.2.0",
     "fluture": "^6.2.7",
     "fluture-sanctuary-types": "^1.2.0",
