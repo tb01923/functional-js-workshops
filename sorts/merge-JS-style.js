@@ -1,4 +1,4 @@
-
+// CLRS page 30
 const merge = (leftArray, rightArray) => {
   let sortedArray = []
   let l = 0, r = 0 ;

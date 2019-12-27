@@ -1,5 +1,5 @@
 // https://www.geeksforgeeks.org/in-place-merge-sort/
-
+// CLRS page 30
 const arrayToStr = (A, leftIndex, rightIndex) => {
     let results = '' ;
     for(let i = leftIndex; i <= rightIndex; i++) {
