@@ -3,6 +3,7 @@ const Additive = function(v) {
 }
 
 Additive.empty = () => new Additive(0)
+
 Additive.prototype.concat = function(other) {
     return new Additive(this.v + other.v)
 }

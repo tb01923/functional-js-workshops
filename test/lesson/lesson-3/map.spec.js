@@ -34,8 +34,11 @@ describe('lesson', function() {
                 expect(doubleArray([1,2,3])).to.include.ordered.members([2,4,6]);
             })
 
-        })
+            it('should have a unary function map', function () {
 
+                const double = x => x * 2
+                expect(map(double)([1,2,3])).to.include.ordered.members([2,4,6]);
+            })
 
     })
 });

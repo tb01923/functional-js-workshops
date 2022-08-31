@@ -1,3 +1,6 @@
+// CLRS Page 68
+// https://www.youtube.com/watch?v=2MmGzdiKR9Y
+
 const makeMax = (leftIndex, rightIndex, sum) => {
     return {leftIndex, rightIndex, sum}
 }
@@ -7,16 +10,22 @@ const sumList = xs => xs.reduce(add2, 0) ;
 
 const _maxSubArray = (array, leftIndex, rightIndex) => {
   const results = new Array(rightIndex)
-  let max = makeMax(undefined, undefined, Number.NEGATIVE_INFINITY) ;
+  results[leftIndex] = makeMax(leftIndex, leftIndex, array[leftIndex]) ;
+  let max = results[leftIndex]
 
-  for(let i = leftIndex; i <= rightIndex; i++){
-     const prev = (i > 0) ? results[i-1] : makeMax(0, 0, 0) ;
-     const contiguous = makeMax(prev.leftIndex, i, array[i] + prev.sum) ;
-     const singular =  makeMax(i, i, array[i]) ;
-     const current = (contiguous.sum > singular.sum) ? contiguous : singular ;
-     results[i] = current ;
-     if(current.sum > max.sum) {
-       max = current ;
+  for(let i = leftIndex + 1; i <= rightIndex; i++){
+     const prev = results[i-1] ;
+
+     const subArray = makeMax(prev.leftIndex, i, array[i] + prev.sum) ;
+     const singleElement = makeMax(i, i, array[i]) ;
+
+     const bestChoiceForThisEndPoint = (subArray.sum > singleElement.sum) ?
+        subArray :
+        singleElement ;
+
+     results[i] = bestChoiceForThisEndPoint ;
+     if(bestChoiceForThisEndPoint.sum > max.sum) {
+       max = bestChoiceForThisEndPoint ;
      }
   }
   return max

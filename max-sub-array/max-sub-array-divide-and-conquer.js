@@ -1,3 +1,6 @@
+// CLRS Page 68
+// https://www.youtube.com/watch?v=2MmGzdiKR9Y
+
 const _maxCrossArray = (array, leftIndex, middleIndex, rightIndex) => {
   let leftSum = Number.NEGATIVE_INFINITY ;
   let rightSum = Number.NEGATIVE_INFINITY ;
